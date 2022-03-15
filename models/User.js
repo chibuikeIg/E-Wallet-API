@@ -23,6 +23,6 @@ const schema = new mongoose.Schema({
         min: 6,
         max: 1045
     }
-})
+}, {timestamps:true})
 
 module.exports = mongoose.model('User', schema)
