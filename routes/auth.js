@@ -1,4 +1,6 @@
 const router=require('express').Router()
+
+// import controllers
 const RegistrationController = require('../controllers/RegistrationController')
 const LoginController = require('../controllers/LoginController')
 
