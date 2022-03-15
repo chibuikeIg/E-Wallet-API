@@ -1,0 +1,19 @@
+{
+  "name": "nodejs_dev_test",
+  "version": "1.0.0",
+  "description": "Bento Backend Developer Nodejs Technical Test",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chibuikeIg/nodejs-dev-test.git"
+  },
+  "author": "chibuikeIg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chibuikeIg/nodejs-dev-test/issues"
+  },
+  "homepage": "https://github.com/chibuikeIg/nodejs-dev-test#readme"
+}
