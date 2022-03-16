@@ -1,7 +1,9 @@
 const User = require('../models/User')
+const Transaction = require('../models/Transaction')
 const request = require('request')
 const paystack = require('../config/paystack')(request)
 const {depositRequestValidation, depositVerificationRequestValidation} = require('../validation')
+
 
 const createDeposit = async (req, res) => {
 
@@ -21,7 +23,7 @@ const createDeposit = async (req, res) => {
     }
 
 
-    paystack.initializePayment(params, (error, body) => {
+    paystack.initializePayment(params,  (error, body) => {
 
         // check for errors during request
         if(error) return res.json({status:400, message:error})
@@ -31,8 +33,18 @@ const createDeposit = async (req, res) => {
         // check for payment gateway error
         if(!response.status) return res.json({status:400, message:response.message})
 
+        // store transaction details
+        const transaction  = new Transaction({
+            user_id: user._id,
+            reference: response.data.reference,
+            amount: req.body.amount,
+            status: 'unverified',
+            type:'deposit'
+        })
 
-        res.json({status:200, message:response.message, auth_url:response.data.authorization_url})
+        transaction.save()
+        .then((result) => res.json({status:200, message:response.message, auth_url:response.data.authorization_url}))
+        .catch((err) => res.json({status:400, message:'Unable to store transaction'}))
 
     })
 
