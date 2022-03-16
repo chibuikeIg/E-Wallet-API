@@ -38,9 +38,21 @@ const depositRequestValidation = (data) => {
     return schema.validate(data)
 }
 
+// create deposit verification request validation
+
+const depositVerificationRequestValidation = (data) => {
+
+    const schema = Joi.object({
+        reference_id: Joi.string().required(),
+    })
+
+    return schema.validate(data)
+}
+
 
 module.exports = {
     registrationValidation,
     loginValidation,
-    depositRequestValidation
+    depositRequestValidation,
+    depositVerificationRequestValidation
 }

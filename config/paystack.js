@@ -5,11 +5,11 @@ module.exports = (request) => {
         const option = {
             url : 'https://api.paystack.co/transaction/initialize',
             headers : {
-                authorization: process.env.PAYSTACK_SECRET_KEY,
+                authorization: 'Bearer '+process.env.PAYSTACK_SECRET_KEY,
                 'content-type': 'application/json',
                 'cache-control': 'no-cache'
            },
-           form
+          form
         }
 
         const callback = (error, response, body)=>{
@@ -24,7 +24,7 @@ module.exports = (request) => {
         const option = {
             url : 'https://api.paystack.co/transaction/verify/' + encodeURIComponent(ref),
             headers : {
-                authorization: process.env.PAYSTACK_SECRET_KEY,
+                authorization: 'Bearer '+process.env.PAYSTACK_SECRET_KEY,
                 'content-type': 'application/json',
                 'cache-control': 'no-cache'
            }
