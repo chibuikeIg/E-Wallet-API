@@ -11,7 +11,7 @@ const DepositController = require('../controllers/DepositController')
  * /api/user/deposits/create:
  *  post:
  *   description: Use this endpoint to fund user account or initialize deposit transaction
- *   paramaters:
+ *   parameters:
  *     - in: header
  *       name: Auth-Token
  *       schema:
@@ -75,7 +75,7 @@ router.post('/create', verifiedUser, DepositController.createDeposit)
  * /api/user/deposits/verify:
  *  post:
  *   description: Use this endpoint to verify deposit transaction and complete funding user account
- *   paramaters:
+ *   parameters:
  *     - in: header
  *       name: Auth-Token
  *       schema:
