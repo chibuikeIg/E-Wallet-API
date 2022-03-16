@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 module.exports = (req, res, next) => {
 
     // check if request header contains auth token
-    const token = req.header('auth-token')
+    const token = req.header('Auth-Token')
     if(!token) return res.json({status:400, message:'Access Denied'})
 
     try {

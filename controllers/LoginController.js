@@ -21,7 +21,7 @@ const authenticateUser = async (req, res) => {
    try {
 
        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET)
-       res.header('auth-token', token).json({status:200, _token:token, message:'User Authenticated.'})
+       res.header('Auth-Token', token).json({status:200, _token:token, message:'User Authenticated.'})
 
    } catch(err) {
 

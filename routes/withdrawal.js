@@ -11,6 +11,12 @@ const WithdrawalController = require('../controllers/WithdrawalController')
  * /api/user/withdrawals/create:
  *  post:
  *   description: Use this endpoint to withdraw funds from user account
+ *   paramaters:
+ *     - in: header
+ *       name: Auth-Token
+ *       schema:
+ *         type: string
+ *       required: true
  *   requestBody:
  *      required: true
  *      content:

@@ -11,6 +11,12 @@ const TransferController = require('../controllers/TransferController')
  * /api/user/transfers/create:
  *  post:
  *   description: Use this endpoint to transfer funds to another user account
+ *   paramaters:
+ *     - in: header
+ *       name: Auth-Token
+ *       schema:
+ *         type: string
+ *       required: true
  *   requestBody:
  *      required: true
  *      content:
