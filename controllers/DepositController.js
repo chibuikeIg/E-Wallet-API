@@ -1,10 +1,10 @@
 const User = require('../models/User')
 const Transaction = require('../models/Transaction')
-const Wallet = require('../models/Wallet')
 const request = require('request')
 const paystack = require('../config/paystack')(request)
 const {depositRequestValidation, depositVerificationRequestValidation} = require('../validation')
 
+const {updateWallet} = require('../controllers/WalletController')
 
 const createDeposit = async (req, res) => {
 
@@ -81,7 +81,7 @@ const verifyDeposit = async (req, res) => {
             Transaction.findOne({user_id:req.user.id, reference:ref}).then((transaction) => {
 
                 // update wallet
-                updateWallet(req.user.id, transaction.amount, (error, message) => {
+                updateWallet(req.user.id, transaction.amount, 'increase', (error, message) => {
 
                     if(error) return res.json({status:400, message:message})
 
@@ -95,43 +95,6 @@ const verifyDeposit = async (req, res) => {
         .catch((err) => res.json({status:400, message:err}))
 
      })
-}
-
-// wallet update function
-
-const updateWallet = (user_id, amount, callback) => {
-
-    Wallet.findOne({user_id:user_id}).then((wallet) => {
-
-        if(!wallet) {
-
-            const newWallet = new Wallet({
-                user_id: user_id,
-                balance: amount
-            })
-
-            newWallet.save()
-            .then((result) => {
-
-                callback(false, result)
-
-            })
-            .catch((err) => callback(true, err))
-
-        } else {
-
-            Wallet.updateOne({user_id:user_id}, {$set: {
-                balance: wallet.balance + amount,
-                updatedAt: Date.now
-            }})
-            .then((result) => callback(false, result))
-            .catch((err) => callback(true, err))
-        }
-
-    }).catch((err) => callback(true, err))
-
-    return callback
-
 }
 
 module.exports = {
