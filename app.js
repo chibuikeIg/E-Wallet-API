@@ -1,5 +1,6 @@
 const express= require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 require('dotenv/config')
 
 // initialize the express application
@@ -14,6 +15,7 @@ const authRoute= require('./routes/auth')
 
 
 // parse json request
+app.use(cors())
 app.use(express.json())
 
 // routes middleware
