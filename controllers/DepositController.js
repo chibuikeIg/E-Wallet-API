@@ -44,7 +44,7 @@ const createDeposit = async (req, res) => {
 
         transaction.save()
         .then((result) => res.json({status:200, message:response.message, auth_url:response.data.authorization_url}))
-        .catch((err) => res.json({status:400, message:'Unable to store transaction'}))
+        .catch((err) => res.json({status:400, message:err}))
 
     })
 
@@ -70,7 +70,13 @@ const verifyDeposit = async (req, res) => {
         // check for payment gateway verification error
         if(!response.status) return res.json({status:400, message:response.message})
 
-        res.json({status:200, message:'Deposit transaction verified'})
+        //update transaction document status to verified
+
+        Transaction.updateOne({user_id:req.user.id, reference:ref}, {$set: {
+            status:'verified',
+            updatedAt:Date.now
+        }}).then((result) => res.json({status:200, message:'Deposit transaction verified'}))
+        .catch((err) => res.json({status:200, message:err}))
 
      })
 }
