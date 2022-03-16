@@ -13,9 +13,9 @@ mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser:true, useUnifiedTop
 //import routes
 const authRoute= require('./routes/auth')
 
+app.use(cors())
 
 // parse json request
-app.use(cors())
 app.use(express.json())
 
 // routes middleware
