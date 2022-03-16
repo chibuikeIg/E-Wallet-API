@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const Transaction = require('../models/Transaction')
+const Wallet = require('../models/Wallet')
 const request = require('request')
 const paystack = require('../config/paystack')(request)
 const {depositRequestValidation, depositVerificationRequestValidation} = require('../validation')
@@ -71,14 +72,66 @@ const verifyDeposit = async (req, res) => {
         if(!response.status) return res.json({status:400, message:response.message})
 
         //update transaction document status to verified
-
         Transaction.updateOne({user_id:req.user.id, reference:ref}, {$set: {
             status:'verified',
             updatedAt:Date.now
-        }}).then((result) => res.json({status:200, message:'Deposit transaction verified'}))
-        .catch((err) => res.json({status:200, message:err}))
+        }}).then((result) => {
+    
+            // update user wallet
+            Transaction.findOne({user_id:req.user.id, reference:ref}).then((transaction) => {
+
+                // update wallet
+                updateWallet(req.user.id, transaction.amount, (error, message) => {
+
+                    if(error) return res.json({status:400, message:message})
+
+                    res.json({status:200, message:'Deposit transaction verified'})
+
+                })
+    
+            }).catch((error) => res.json({status:400, message:error}))
+    
+        })
+        .catch((err) => res.json({status:400, message:err}))
 
      })
+}
+
+// wallet update function
+
+const updateWallet = (user_id, amount, callback) => {
+
+    Wallet.findOne({user_id:user_id}).then((wallet) => {
+
+        if(!wallet) {
+
+            const newWallet = new Wallet({
+                user_id: user_id,
+                balance: amount
+            })
+
+            newWallet.save()
+            .then((result) => {
+
+                callback(false, result)
+
+            })
+            .catch((err) => callback(true, err))
+
+        } else {
+
+            Wallet.updateOne({user_id:user_id}, {$set: {
+                balance: wallet.balance + amount,
+                updatedAt: Date.now
+            }})
+            .then((result) => callback(false, result))
+            .catch((err) => callback(true, err))
+        }
+
+    }).catch((err) => callback(true, err))
+
+    return callback
+
 }
 
 module.exports = {
