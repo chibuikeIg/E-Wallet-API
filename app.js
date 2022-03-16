@@ -14,7 +14,7 @@ const port = process.env.PORT || 3000
 
 // initialize db connection and // listen for incoming request
 mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser:true, useUnifiedTopology:true})
-.then((result) => app.listen(port)).catch((err)=> console.log(err))
+.then((result) => app.listen(port, () => { console.log(`Server running on port ${port}`) })).catch((err)=> console.log(err))
 
 
 const swaggerOptions = {
