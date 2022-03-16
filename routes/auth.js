@@ -12,7 +12,10 @@ router.post('/login', LoginController.authenticateUser)
 
 // import routes
 const depositRoute = require('./deposit')
-router.use('/deposits', depositRoute)
+const transferRoute = require('./transfer')
 
+// middlewares
+router.use('/deposits', depositRoute)
+router.use('/transfers', transferRoute)
 
 module.exports = router
