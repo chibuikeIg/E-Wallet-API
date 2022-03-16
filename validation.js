@@ -63,10 +63,23 @@ const transferRequestValidation = (data) => {
 
 }
 
+// withdrawal request validation
+
+const withdrawalRequestValidation = (data) => {
+
+    const schema = Joi.object({
+        amount: Joi.number().required().min(1)
+    })
+
+    return schema.validate(data)
+
+}
+
 module.exports = {
     registrationValidation,
     loginValidation,
     depositRequestValidation,
     depositVerificationRequestValidation,
-    transferRequestValidation
+    transferRequestValidation,
+    withdrawalRequestValidation
 }
