@@ -10,10 +10,11 @@ const swaggerUi = require('swagger-ui-express');
 
 // initialize the express application
 const app = express()
+const port = process.env.PORT || 3000
 
 // initialize db connection and // listen for incoming request
 mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser:true, useUnifiedTopology:true})
-.then((result) => app.listen(process.env.PORT)).catch((err)=> console.log(err))
+.then((result) => app.listen(port)).catch((err)=> console.log(err))
 
 
 const swaggerOptions = {
