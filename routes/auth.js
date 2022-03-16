@@ -10,5 +10,9 @@ router.post('/register', RegistrationController.storeUser)
 // authenticate user
 router.post('/login', LoginController.authenticateUser)
 
+// import routes
+const depositRoute = require('./deposit')
+router.use('/deposits', depositRoute)
+
 
 module.exports = router
