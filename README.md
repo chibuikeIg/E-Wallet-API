@@ -17,7 +17,4 @@ This is a short documentation on how to set up the project on your local machine
 5. Open your browser and type in your project host and port number followed by `/api-docs`. Example `http://localhost:3000/api-docs` to access a complete documentation on all endpoints.
 
 
-**Note:** You can also access complete api documentation on https://nodejs-wallet-system-api.herokuapp.com/api-docs/
-
-
 
