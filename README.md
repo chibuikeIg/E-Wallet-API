@@ -1,4 +1,4 @@
-# Nodejs User Wallet System API
+# Nodejs Wallet System API
 #### Nodejs user wallet system api developer test short documention
 
 This is a short documentation on how to set up the project on your local machine
